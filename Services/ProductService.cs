@@ -14,7 +14,14 @@ namespace ProvaPub.Services
 
 		public ProductList  ListProducts(int page)
 		{
-			return new ProductList() {  HasNext=false, TotalCount =10, Products = _ctx.Products.ToList() };
+			int pageItens = 10;
+			int index = (page - 1) * pageItens;
+			var product = _ctx.Products.Skip(index).Take(pageItens).ToList();
+
+			int totalCount = _ctx.Products.Count();
+			bool hasNext = (index + pageItens) < totalCount;
+
+			return new ProductList() {  HasNext=hasNext,TotalCount = totalCount, Products = product };
 		}
 
 	}
