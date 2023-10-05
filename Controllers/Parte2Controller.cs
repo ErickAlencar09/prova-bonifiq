@@ -20,12 +20,16 @@ namespace ProvaPub.Controllers
 		/// </summary>
 		TestDbContext _ctx;
 		ProductService _productService;
-		public Parte2Controller(TestDbContext ctx, ProductService productService)
+		CustomerService _customerService;
+		public Parte2Controller(TestDbContext ctx, ProductService productService, CustomerService customerService)
 		{
 			_ctx = ctx;
 			_productService = productService;
+			_customerService = customerService;
 		}
 	
+		
+
 		[HttpGet("products")]
 		public ProductList ListProducts(int page)
 		{
@@ -34,9 +38,8 @@ namespace ProvaPub.Controllers
 
 		[HttpGet("customers")]
 		public CustomerList ListCustomers(int page)
-		{
-			var customerService = new CustomerService(_ctx);
-			return customerService.ListCustomers(page);
+		{			
+			return _customerService.ListCustomers(page);
 		}
 	}
 }
